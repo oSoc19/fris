@@ -4,7 +4,7 @@
         /* METHODS */
         public static function connect() {
             try {
-                return new PDO("mysql:host=68.183.212.195;dbname=fris;charset=utf8mb4",'fris','X@utAiCS*FtT79t@T@Da8bt9', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+                return new PDO("mysql:host=hostname;dbname=dbname;charset=utf8mb4",'username','password', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
             }
             catch (Exception $e) {
                 die("Connexion au serveur MySQL impossible : " . $e->getMessage());
