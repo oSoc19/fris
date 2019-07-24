@@ -22,7 +22,7 @@ Host the API on the server of your choosing and update your credentials (line 7)
 return new PDO("mysql:host=hostname;dbname=dbname;charset=utf8mb4",'username','password', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 ```
 
-### 2.3. Setup module
+### 2.3. Setup view
 Place the suggestions folder with the twig file in your views. You could use twig's {% include %} to add the results to any view.\
 Change the link to the API URL (line 39 & 77) in suggestions/suggestions.html.twig to your hostname.
 ```
