@@ -3,7 +3,8 @@
 ## 1. Requirements
 * Apache 2.4
 * PHP 7.1
-* MySQL 5.6 or 5.7 (percona)
+* MySQL 5.6 or 5.7
+* Composer
 
 ## 2. Installation
 
@@ -24,6 +25,10 @@ DB_HOSTNAME="localhost"
 DB_NAME="suggestions"
 DB_USERNAME="root"
 DB_PASSWORD=""
+```
+Go into the api folder and run :
+```
+$ composer install
 ```
 
 ### 2.3. Setup view
