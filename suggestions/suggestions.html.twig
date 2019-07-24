@@ -1,0 +1,108 @@
+<!--
+<div class="container col-12 my-5 text-center">
+   <div class="col-3 mx-auto">
+       <div id="loader" class="loader hidden mx-auto"></div>
+       <div id="list">
+           <ul id="synonymList" class="list-group">
+               <li id="word" class="list-group-item suggestion">Word</li>
+               <li id="word2" class="list-group-item suggestion">Word</li>
+           </ul>
+       </div>
+   </div>
+</div>
+-->
+
+<div class="section layout-container clearfix" style="padding-left: 0px;">
+    <h1 class="title page-title suggestion-title suggestionsTitle hidden" id="pagetitle" style="margin-top: 16px !important; padding-left: 0px;">Suggested Searches</h1>
+</div>
+
+<div id="suggestionsDiv">
+    <div id="loader" class="loader hidden"></div>
+    <ul id="synonymList" class="list-group">
+    </ul>
+</div>
+
+<div id="callback"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    window.onload = function() {
+        /*----------------------------------------------------
+                        GET SUGGESTIONS ON SEARCH
+        ----------------------------------------------------*/
+        let href = window.location.href;
+        let url = new URL(href);
+        let query_string = url.search;
+        let search_params = new URLSearchParams(query_string);
+        let search = search_params.get('search_api_fulltext');
+        if(search != null) {
+            // Get suggestions
+            $url = '../api/process/suggestions.php';
+            let lang = href.split('/')[3];
+            if(lang == 'en') {
+                lang = 'en';
+            }
+            else if(lang == 'nl') {
+                lang = 'nl';
+            }
+            else {
+                lang = 'en';
+            }
+            dataSend = 'action=get&search=' + search + '&lang=' + lang;
+            // Loader
+            document.getElementById('loader').classList.toggle('hidden');
+            $.ajax({
+                url: $url,
+                type: "GET",
+                data: dataSend,
+                processData: false,
+                contentType: false,
+                complete: function (data) {
+                    document.getElementById('loader').classList.toggle('hidden'); 
+                    $("#synonymList").html('');
+                    if(data.responseText.length > 0) {
+                        suggestions = JSON.parse(data.responseText);
+                        $('.suggestionsTitle').toggleClass('hidden');
+                        for (var suggestion in suggestions) {
+                            let score = suggestions[suggestion];
+                            $("#synonymList").append('<li id="' + suggestion + '" class="list-group-item suggestion" title="' + score + '">' + suggestion + '</li>');
+                        }
+                    }
+                }
+            });
+        }
+        /*----------------------------------------------------
+                        GET SEARCH ON A SUGGESTION
+        ----------------------------------------------------*/
+        $('#synonymList').on('click', '.suggestion', function() {
+            $url = '../api/process/suggestions.php';
+            let suggestion = $(this).text();
+            let search = search_params.get('search_api_fulltext');
+            let formData = new FormData();
+            formData.append('action', 'select');
+            formData.append('suggestion', suggestion);
+            formData.append('search', search);
+            $.ajax({
+                url: $url,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                complete: function (data) {
+                    let newUrl = replaceUrlParam(href, 'search_api_fulltext', suggestion);
+                    window.location.replace(newUrl);
+                }
+            });
+        });
+    };
+    function replaceUrlParam(url, paramName, paramValue) {
+        if (paramValue == null) {
+            paramValue = '';
+        }
+        var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+        if (url.search(pattern)>=0) {
+            return url.replace(pattern,'$1' + paramValue + '$2');
+        }
+        url = url.replace(/[?#]$/,'');
+        return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+    }
+</script>

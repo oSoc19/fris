@@ -19,20 +19,17 @@
       if(isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] == 'get') {
           // GET SUGGESTIONS
           if(isset($_GET['search']) && !empty($_GET['search']) && isset($_GET['lang']) && !empty($_GET['lang'])) {
-            $json = [];
             $search = strtolower(str_replace(' ', '%20', htmlspecialchars($_GET['search'])));
             if(strlen($search) > 1) {
+              $json = [];
               $lang = htmlspecialchars($_GET['lang']);
   
               $suggestions = SuggestionManager::getSuggestions($lang, $search);
               foreach ($suggestions as $suggestion) {
                   $json[$suggestion->word] = $suggestion->score;
               }
-            }  
-            echo json_encode($json);
-          }
-          else {
-              http_response_code(400);
+              echo json_encode($json);
+            } 
           }
       }
     }
@@ -44,12 +41,6 @@
                 $suggestion = str_replace(' ', '%20', htmlspecialchars($_POST['suggestion']));
                 SuggestionManager::increaseScoreOf($search, $suggestion);
             }
-            else {
-                http_response_code(400);
-            }
-        }
-        else {
-            http_response_code(400);
         }
     }
     else {
