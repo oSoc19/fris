@@ -17,9 +17,13 @@ $ git clone https://github.com/oSoc19/fris.git
 Create the database (database/clean version.sql) in your local MySQL environment in order to be able to run the API locally.
 
 ### 2.2. Setup API
-Host the API on the server of your choosing and update your credentials (line 7) in api/manager/DBManager.php 
+Host the API on the server of your choosing.\
+Update your credentials in the api/.env.example file and rename it to .env (make a copy). 
 ```
-return new PDO("mysql:host=hostname;dbname=dbname;charset=utf8mb4",'username','password', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+DB_HOSTNAME="localhost"
+DB_NAME="suggestions"
+DB_USERNAME="root"
+DB_PASSWORD=""
 ```
 
 ### 2.3. Setup view

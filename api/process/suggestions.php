@@ -1,4 +1,8 @@
 <?php
+    // Composer & Environment variables
+    require __DIR__ . '/../vendor/autoload.php';
+    $dotenv = Dotenv\Dotenv::create(__DIR__ . "/../");
+    $dotenv->load();
     // All classes & managers
     spl_autoload_register(function($class) {
         if(strpos($class, "Manager") !== false)

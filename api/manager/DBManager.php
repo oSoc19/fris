@@ -1,13 +1,14 @@
 <?php
+    
     class DBManager {
 
         /* METHODS */
         public static function connect() {
             try {
-                return new PDO("mysql:host=hostname;dbname=dbname;charset=utf8mb4",'username','password', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+                return new PDO("mysql:host=" . getenv('DB_HOSTNAME') . ";dbname=" . getenv('DB_NAME') . ";charset=utf8mb4", getenv('DB_USERNAME'), getenv('DB_PASSWORD'), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
             }
             catch (Exception $e) {
-                die("Connection to MySQL impossible : " . $e->getMessage());
+                die("Connexion au serveur MySQL impossible : " . $e->getMessage());
             }
         }
 

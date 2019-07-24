@@ -1,17 +1,54 @@
-<!--
-<div class="container col-12 my-5 text-center">
-   <div class="col-3 mx-auto">
-       <div id="loader" class="loader hidden mx-auto"></div>
-       <div id="list">
-           <ul id="synonymList" class="list-group">
-               <li id="word" class="list-group-item suggestion">Word</li>
-               <li id="word2" class="list-group-item suggestion">Word</li>
-           </ul>
-       </div>
-   </div>
-</div>
--->
+<!-- CSS -->
+<style>
+    .loader {
+    margin-left: auto;
+    margin-right: auto;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid rgb(255, 230, 21);
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    }
 
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+    display: none;
+    }
+
+    #synonymList {
+    margin: 0px;
+    padding: 0px;
+    }
+
+    .suggestion {
+    color: #000000;
+    background: url("../images/pattern.svg") repeat #E5E5E5;
+    margin: 0px;
+    margin-bottom: 5px;
+    margin-right: 3px;
+    padding: 5px 10px;
+    display: inline-block;
+    border-radius: 20px;
+    font-family: Arial;
+    }
+
+    .suggestion:hover {
+    cursor: pointer;
+    color: #fcfde4;
+    transition: .35s all .01s;
+    background: none;
+    background-color: #c2b049;
+    }
+</style>
+
+
+<!-- HTML -->
 <div class="section layout-container clearfix" style="padding-left: 0px;">
     <h1 class="title page-title suggestion-title suggestionsTitle hidden" id="pagetitle" style="margin-top: 16px !important; padding-left: 0px;">Suggested Searches</h1>
 </div>
@@ -22,7 +59,8 @@
     </ul>
 </div>
 
-<div id="callback"></div>
+
+<!-- SCRIPTS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
     window.onload = function() {
